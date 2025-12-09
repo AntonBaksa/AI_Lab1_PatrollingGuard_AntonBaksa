@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,33 +8,26 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotateSpeed = 360f;
 
+    private CharacterController controller;
+    private Vector2 moveInput;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        controller = GetComponent<CharacterController>();
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // get raw input values
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+        controller.Move(move * moveSpeed * Time.deltaTime);
 
-        Vector3 inputDirection = new Vector3(h, 0f, v).normalized;
-
-        if(inputDirection.sqrMagnitude > 0.01f)
-        {
-            //calculate how far to move per frame
-            Vector3 displacement = inputDirection * moveSpeed * Time.deltaTime;
-
-            //apply movement to the objects position
-            transform.position += displacement;
-
-            Quaternion targetRotation = Quaternion.LookRotation(inputDirection, Vector3.up);
-
-            //make rotation smooth
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-        }
+       
     }
 }
