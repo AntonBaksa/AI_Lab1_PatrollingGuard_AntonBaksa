@@ -12,10 +12,8 @@ public enum EnemyState
 public class SimpleChaser : MonoBehaviour
 {
 
-    [Header("References")]
     public Transform target;
 
-    [Header("Chase settings")]
     public float chaseRange = 10f;
 
     public Transform[] waypoints;
