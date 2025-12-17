@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y).normalized;
-        controller.Move(move * moveSpeed * Time.deltaTime);
-
-       
+        controller.Move(move * moveSpeed * Time.deltaTime);  
     }
 }
