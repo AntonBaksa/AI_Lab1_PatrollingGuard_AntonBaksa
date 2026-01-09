@@ -26,7 +26,7 @@ public partial class UpdatePerception : Action
         // Ensure we have sane defaults.
         if (TimeSinceLastSeen != null && TimeSinceLastSeen.Value < 0f) TimeSinceLastSeen.Value = 9999f;
            
-        return Status.Success;
+        return Status.Running;
     }
     protected override Status OnUpdate()
     {
